@@ -2,9 +2,10 @@ const MongoClient = require('mongodb').MongoClient;
 
 const url = process.env.MONGODB_URL;
 const db = process.env.MONGODB_DB;
+const poolSize = process.env.MONGODB_POOL_SIZE;
 
 const options = {
-    poolSize: 10,
+    poolSize,
     useUnifiedTopology: true,
 };
 

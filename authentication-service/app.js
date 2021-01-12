@@ -1,32 +1,23 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const mongo = require("shared/mongopool.js");
+const authRepo = require("./auth-repository.js");
 
 const PORT = process.env.PORT
+const SECRET = process.env.JWT_SECRET;
 
 const app = express();
 
-app.get('/ping', (req, res) => {
+const response = (res, status, msg) => res.status(status).json(msg);
 
-    mongo.collection('users')
-        .then(coll => {
-            coll.find().toArray((err, docs) => {
-                if (err) { throw err };
-                console.log(docs);
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    res.json({msg: "pong"});
+app.get('/ping', (req, res) => {
+    res.send("pong");
 });
 
 const parseUserCreds = (req, res, next) => {
     const base64Creds = req.get('Authorization');
     if (!base64Creds) {
-        return res
-            .status(401)
-            .json({msg: "Missing Authotization header"});
+        return response(res, 401, {msg: "Missing Authorization header."});
     }
 
     const decodedCreds = Buffer.from(base64Creds, 'base64').toString('ascii');
@@ -37,18 +28,29 @@ const parseUserCreds = (req, res, next) => {
             throw new Error();
         }
         req.userCreds = {login, password};
+        console.log(req.userCreds);
         return next();
     } catch (err) {
-        return res
-            .status(401)
-            .json({msg: "Provided credentials don't follow the expected pattern."});
+        return response(res, 401, {msg: "Provided credentials don't follow the expected pattern."});
     }
 }
 
 app.get('/authenticate', parseUserCreds, (req, res) => {
     const creds = req.userCreds;
-    console.log(creds);
-    res.send("ok");
+
+    authRepo
+        .findUserByCredentials(creds)
+        .then(user => {
+            if (!user) {
+                return response(res, 401, {msg: "Incorrect login or password."});
+            }
+            // TODO: create a function that generates legit tokens
+            // https://github.com/auth0/node-jsonwebtoken
+            response(res, 200, {token: "ala-ma-kota"});
+        })
+        .catch(err => {
+            response(res, 500, {msg: "Something went wrong.", err});
+        });
 });
 
 app.listen(PORT, () => {
