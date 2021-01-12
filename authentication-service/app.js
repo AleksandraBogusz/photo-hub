@@ -1,11 +1,23 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const mongo = require("shared/mongopool.js");
 
 const PORT = process.env.PORT
 
 const app = express();
 
 app.get('/ping', (req, res) => {
+
+    mongo.collection('users')
+        .then(coll => {
+            coll.find().toArray((err, docs) => {
+                if (err) { throw err };
+                console.log(docs);
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
     res.json({msg: "pong"});
 });
 
@@ -41,4 +53,9 @@ app.get('/authenticate', parseUserCreds, (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Token-generator-service is running at ${PORT}.`);
+});
+
+process.on('SIGINT', () => {
+    mongo.close();
+    process.exit();
 });
