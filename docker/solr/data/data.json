@@ -1,0 +1,16 @@
+[
+    {
+        "image_id": "img_1",
+        "owner_id": "login1",
+        "title": "a cat",
+        "description": "a small cat",
+        "tag": ["animal", "cat", "small"]
+    },
+    {
+        "image_id": "img_2",
+        "owner_id": "login1",
+        "title": "a table",
+        "description": "a wooden table",
+        "tag": ["furniture", "table"]
+    }
+]
