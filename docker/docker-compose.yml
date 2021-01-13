@@ -19,3 +19,11 @@ services:
         environment:
             ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
             ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    
+    solr:
+        container_name: solr
+        build:
+            context: ./solr
+        ports:
+            - ${SOLR_PORT}:8983
+        command: -cloud -f

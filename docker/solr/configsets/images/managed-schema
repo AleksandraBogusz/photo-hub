@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema name="ccs_residents" version="1.6">
+
+    <field name="image_id"      type="string" indexed="true" docValues="true" required="true"/>
+    <field name="owner_id"      type="string" indexed="true"/>
+    <field name="title"         type="string" indexed="false"/>
+    <field name="description"   type="string" indexed="false"/>
+    <field name="tag" type="lc_tag"/>
+
+    <field name="_version_" type="plong"        stored="false"  indexed="false" docValues="true"/>
+    <field name="_root_"    type="string"       stored="false"  indexed="true"  />
+    <field name="_text_"    type="text_general" stored="false"  indexed="true"  />
+
+    <uniqueKey>image_id</uniqueKey>
+
+    <fieldType name="lc_tag" class="solr.TextField" indexed="true" stored="true" docValues="false" multiValued="true" sortMissingLast="true">
+        <analyzer>
+            <tokenizer class="solr.KeywordTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+        </analyzer>
+    </fieldType>
+
+    <fieldType name="string"        class="solr.StrField"         indexed="false" stored="true" docValues="false" multiValued="false" sortMissingLast="true"/>
+    <fieldType name="pint"          class="solr.IntPointField"    indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="text_general"  class="solr.TextField"        indexed="false" stored="true" docValues="false" multiValued="false" positionIncrementGap="100"/>
+    <fieldType name="strings"       class="solr.StrField"         indexed="false" stored="true" docValues="false" multiValued="false" sortMissingLast="true"/>
+    <fieldType name="boolean"       class="solr.BoolField"        indexed="false" stored="true" docValues="false" multiValued="false" sortMissingLast="true"/>
+    <fieldType name="booleans"      class="solr.BoolField"        indexed="false" stored="true" docValues="false" multiValued="false" sortMissingLast="true"/>
+    <fieldType name="pfloat"        class="solr.FloatPointField"  indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="plong"         class="solr.LongPointField"   indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="pdouble"       class="solr.DoublePointField" indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="pints"         class="solr.IntPointField"    indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="pfloats"       class="solr.FloatPointField"  indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="plongs"        class="solr.LongPointField"   indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="pdoubles"      class="solr.DoublePointField" indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="random"        class="solr.RandomSortField"  indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="pdate"         class="solr.DatePointField"   indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="pdates"        class="solr.DatePointField"   indexed="false" stored="true" docValues="false" multiValued="false"/>
+    <fieldType name="binary"        class="solr.BinaryField"      indexed="false" stored="true" docValues="false" multiValued="false"/>
+</schema>
