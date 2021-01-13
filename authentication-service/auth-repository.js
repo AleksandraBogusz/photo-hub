@@ -5,7 +5,9 @@ const findUserByCredentials = (creds) => {
     return new Promise((resolve, reject) => {
         const cb = (err, user) => {
             if (err) { reject(err); }
-            resolve(user);
+            if (!user) { return resolve(null); }
+            const {displayName, role} = user;
+            resolve({displayName, role});
         }
         mongo
             .collection(_COLLECTION)

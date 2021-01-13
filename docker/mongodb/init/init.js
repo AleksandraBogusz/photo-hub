@@ -12,5 +12,10 @@ mydb.createUser({
 });
 
 mydb.createCollection('users');
-mydb.users.insertOne({login: "login1", password: "pass", displayName: "login1display"});
-mydb.users.insertOne({login: "login2", password: "pass", displayName: "login2display"});
+mydb.users.insertOne({
+    _id: "login1",
+    login: "login1",
+    password: "pass",
+    displayName: "login1display",
+    role: "USER"
+});

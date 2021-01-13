@@ -28,7 +28,6 @@ const parseUserCreds = (req, res, next) => {
             throw new Error();
         }
         req.userCreds = {login, password};
-        console.log(req.userCreds);
         return next();
     } catch (err) {
         return response(res, 401, {msg: "Provided credentials don't follow the expected pattern."});
@@ -40,13 +39,12 @@ app.get('/authenticate', parseUserCreds, (req, res) => {
 
     authRepo
         .findUserByCredentials(creds)
-        .then(user => {
-            if (!user) {
+        .then(payload => {
+            if (!payload) {
                 return response(res, 401, {msg: "Incorrect login or password."});
             }
-            // TODO: create a function that generates legit tokens
-            // https://github.com/auth0/node-jsonwebtoken
-            response(res, 200, {token: "ala-ma-kota"});
+            const token = jwt.sign(payload, SECRET, {expiresIn: '1h'});
+            response(res, 200, {token});
         })
         .catch(err => {
             response(res, 500, {msg: "Something went wrong.", err});
