@@ -2,11 +2,12 @@
 
 <schema name="ccs_residents" version="1.6">
 
-    <field name="image_id"      type="string" indexed="true" docValues="true" required="true"/>
+    <field name="image_id"      type="string" indexed="true"                        docValues="true" required="true"/>
+    <field name="url"           type="string" indexed="false"   required="true"/>
     <field name="owner_id"      type="string" indexed="true"/>
     <field name="title"         type="string" indexed="false"/>
     <field name="description"   type="string" indexed="false"/>
-    <field name="tag" type="lc_tag"/>
+    <field name="tag"           type="lc_tag"                   required="true"/>
 
     <field name="_version_" type="plong"        stored="false"  indexed="false" docValues="true"/>
     <field name="_root_"    type="string"       stored="false"  indexed="true"  />
