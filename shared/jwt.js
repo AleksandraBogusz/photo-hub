@@ -1,4 +1,5 @@
 const _jwt = require('jsonwebtoken');
+const _BEARER = "Bearer ";
 
 const _SECRET = process.env.JWT_SECRET;
 
@@ -16,20 +17,20 @@ const middleware = (req, res, next) => {
     if (!value) {
         return res
             .status(403)
-            .json({ msg: "Missing authorization header." });
+            .json({ msg: "Missing 'Authorization' header." });
     }
 
-    if (!value.startsWith('Bearer ')) {
+    if (!value.startsWith(_BEARER)) {
         return res
             .status(403)
             .json({ msg: "Unexpected 'Authorization' value format." });
     }
 
-    const token = value.split('Bearer ')[1];
+    const token = value.split(_BEARER)[1];
     if (!token) {
         return res
             .status(403)
-            .json({ msg: "Malformed 'Authorization' value."});
+            .json({ msg: "Malformed 'Authorization' value." });
 
     }
 
