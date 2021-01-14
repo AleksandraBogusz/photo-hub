@@ -36,7 +36,6 @@ const parseUserCreds = (req, res, next) => {
 
 app.get('/authenticate', parseUserCreds, (req, res) => {
     const creds = req.userCreds;
-
     authRepo
         .findUserByCredentials(creds)
         .then(payload => {
