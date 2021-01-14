@@ -1,9 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const mongo = require("shared/mongopool.js");
+const mongo = require("shared/mongo-connection.js");
 const authRepo = require("./auth-repository.js");
 
-const PORT = process.env.PORT
+const PORT = process.env.AUTHENTICATION_SERVICE_PORT;
 const SECRET = process.env.JWT_SECRET;
 
 const app = express();
@@ -36,7 +36,6 @@ const parseUserCreds = (req, res, next) => {
 
 app.get('/authenticate', parseUserCreds, (req, res) => {
     const creds = req.userCreds;
-
     authRepo
         .findUserByCredentials(creds)
         .then(payload => {
@@ -52,7 +51,7 @@ app.get('/authenticate', parseUserCreds, (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Token-generator-service is running at ${PORT}.`);
+    console.log(`authentication-service is running at ${PORT}.`);
 });
 
 process.on('SIGINT', () => {

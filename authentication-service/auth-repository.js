@@ -1,4 +1,4 @@
-const mongo = require('shared/mongopool.js');
+const mongo = require('shared/mongo-connection.js');
 
 const _COLLECTION = 'users';
 const findUserByCredentials = (creds) => {
