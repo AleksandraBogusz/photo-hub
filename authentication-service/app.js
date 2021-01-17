@@ -1,14 +1,11 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
+const jwt = require('shared/jwt.js');
 const mongo = require("shared/mongo-connection.js");
 const authRepo = require("./auth-repository.js");
 
 const PORT = process.env.AUTHENTICATION_SERVICE_PORT;
-const SECRET = process.env.JWT_SECRET;
 
 const app = express();
-
-const response = (res, status, msg) => res.status(status).json(msg);
 
 app.get('/ping', (req, res) => {
     res.send("pong");
@@ -17,20 +14,24 @@ app.get('/ping', (req, res) => {
 const parseUserCreds = (req, res, next) => {
     const base64Creds = req.get('Authorization');
     if (!base64Creds) {
-        return response(res, 401, {msg: "Missing Authorization header."});
+        return res
+            .status(401)
+            .json({ msg: "Missing 'Authorization' header." });
     }
 
     const decodedCreds = Buffer.from(base64Creds, 'base64').toString('ascii');
 
     try {
-        const {login, password} = JSON.parse(decodedCreds);
+        const { login, password } = JSON.parse(decodedCreds);
         if (!login || !password) {
             throw new Error();
         }
-        req.userCreds = {login, password};
+        req.userCreds = { login, password };
         return next();
     } catch (err) {
-        return response(res, 401, {msg: "Provided credentials don't follow the expected pattern."});
+        return res
+            .status(401)
+            .json({ msg: "Provided credentials don't follow the expected pattern." });
     }
 }
 
@@ -40,13 +41,17 @@ app.get('/authenticate', parseUserCreds, (req, res) => {
         .findUserByCredentials(creds)
         .then(payload => {
             if (!payload) {
-                return response(res, 401, {msg: "Incorrect login or password."});
+                return res
+                    .status(401)
+                    .json({ msg: "Incorrect login or password." });
             }
-            const token = jwt.sign(payload, SECRET, {expiresIn: '1h'});
-            response(res, 200, {token});
+            const token = jwt.sign(payload);
+            return res.json({ token });
         })
         .catch(err => {
-            response(res, 500, {msg: "Something went wrong.", err});
+            return res
+                .status(500)
+                .json({ msg: "Something went wrong.", err });
         });
 });
 
