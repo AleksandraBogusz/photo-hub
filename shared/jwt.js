@@ -1,7 +1,10 @@
 const _jwt = require('jsonwebtoken');
 const _BEARER = "Bearer ";
 
-const _SECRET = process.env.JWT_SECRET;
+// TODO: when imported into REACT app, the following var cannot be read,
+// this is why we are using the hardcoded '???' value here, 
+// remove the value and readt the secret only from env var
+const _SECRET = process.env.JWT_SECRET || '???';
 
 const sign = (payload) => _jwt.sign(payload, _SECRET, { expiresIn: '1h' });
 const verify = (token) => {

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const jwt = require('shared/jwt.js');
 const mongo = require("shared/mongo-connection.js");
 const authRepo = require("./auth-repository.js");
@@ -6,6 +7,7 @@ const authRepo = require("./auth-repository.js");
 const PORT = process.env.AUTHENTICATION_SERVICE_PORT;
 
 const app = express();
+app.use(cors());
 
 app.get('/ping', (req, res) => {
     res.send("pong");

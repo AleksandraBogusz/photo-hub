@@ -43,7 +43,9 @@ const PublicPage = () => {
 }
 
 const PrivatePage = () => {
-  return <h1>Private Page</h1>;
+  const auth = useAuth();
+
+  return <h1>Hello {auth.user.displayName}</h1>;
 }
 
 const AuthButton = (props) => {
