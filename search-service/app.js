@@ -6,7 +6,7 @@ const PORT = process.env.SEARCH_SERVICE_PORT;
 const app = express();
 
 app.get('/ping', (req, res) => {
-    res.send("ok");
+    res.json({msg: "pong"});
 });
 
 app.get('/search', jwt.middleware, (req, res) => {
@@ -23,7 +23,6 @@ app.get('/search', jwt.middleware, (req, res) => {
         .then(docs => res.json(docs))
         .catch(err => res.status(500).json({ err: err.toString() }))
 });
-
 
 app.listen(PORT, () => {
     console.log(`search service is running at ${PORT}`);
