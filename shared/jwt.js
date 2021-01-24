@@ -1,7 +1,7 @@
 const _jwt = require('jsonwebtoken');
 const _BEARER = "Bearer ";
 
-const _SECRET = process.env.JWT_SECRET;
+const _SECRET = process.env.JWT_SECRET || process.env.REACT_APP_JWT_SECRET;
 
 const sign = (payload) => _jwt.sign(payload, _SECRET, { expiresIn: '1h' });
 const verify = (token) => {
