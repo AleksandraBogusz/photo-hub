@@ -7,6 +7,7 @@ import {
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import { Authentication, useAuth } from './utils/Auth.js';
 import { LoginForm } from './components/LoginForm.js';
+import { useEffect } from 'react/cjs/react.development';
 
 const App = () => {
   return (
@@ -59,6 +60,10 @@ const AuthButton = (props) => {
 
 const AuthenticatedRoute = ({ children, ...props }) => {
   const auth = useAuth();
+  useEffect(() => {
+    console.log("Checking the token.");
+    auth.check();
+  });
 
   const render = ({location}) => {
     if (!auth.user) {

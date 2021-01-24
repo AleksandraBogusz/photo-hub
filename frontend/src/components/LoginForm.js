@@ -2,20 +2,16 @@ import { useAuth } from '../utils/Auth.js';
 import { useState } from 'react';
 
 export const LoginForm = () => {
+    const auth = useAuth();
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const auth = useAuth();
-
     const onSubmit = (e) => {
         e.preventDefault();
-        auth.login({login, password})
-            .then(_ => console.log("logged in!"))
-            .catch(_ => {
-                console.log("not logged in...");
-                setError("Incorrect login or password");
-            })
+        auth
+            .login({login, password})
+            .catch(error => setError(error.message))
     }
 
     return (
