@@ -1,27 +1,36 @@
 const express = require('express');
-const solr = require('shared/solr-connection.js');
+const cors = require('cors');
+// const solr = require('shared/solr-connection.js');
 const jwt = require('shared/jwt.js');
+const photosRepository = require('./repositories/PhotosRepository.js');
 
 const PORT = process.env.SEARCH_SERVICE_PORT;
 const app = express();
+
+app.use(cors());
 
 app.get('/ping', (req, res) => {
     res.json({msg: "pong"});
 });
 
 app.get('/search', jwt.middleware, (req, res) => {
-    const term = req.query?.term;
-    if (!term) {
-        return res
-            .status(400)
-            .json({ msg: "Missing ?term query parameter." })
+    const q = req.query?.q;
+    const page = req.query?.page || 0;
+    const perPage = req.query?.per_page || 30;
+
+    if (!q) {
+        return res.status(400).json({ msg: "Missing ?q parameter." });
     }
 
-    //TODO: prevent any query injections
-    const query = `tag:${term}`;
-    solr.search('images', query)
-        .then(docs => res.json(docs))
-        .catch(err => res.status(500).json({ err: err.toString() }))
+    photosRepository.findByTagWithPagination(q, page, perPage)
+        .then(docs => {
+            return res.status(200).json(docs);
+        })
+        .catch(err => {
+            return res
+                .status(500)
+                .json({ msg: "Something went wrong!" });
+        })
 });
 
 app.listen(PORT, () => {

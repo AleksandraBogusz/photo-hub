@@ -14,7 +14,7 @@ const search = (collection, query) => {
     const parse = (json) => {
         const docs = json?.response?.docs
         if (!docs) {
-            throw new Error("Undefined response despite status 200.");
+            throw new Error("Undefined docs despite status 200.");
         }
         return docs
     }
