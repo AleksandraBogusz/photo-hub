@@ -1,37 +1,35 @@
-import {
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { Switch, Route } from "react-router-dom";
 
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-import { Authentication, useAuth } from './utils/Auth.js';
-import { useEffect } from 'react/cjs/react.development';
-import { NavBar } from './components/NavBar.js';
-import { LoginForm } from './components/LoginForm.js';
-import { PhotosDisplay } from './components/PhotosDisplay.js';
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { Authentication, useAuth } from "./utils/Auth.js";
+import { useEffect } from "react/cjs/react.development";
+import { NavBar } from "./components/NavBar.js";
+import { LoginForm } from "./components/LoginForm.js";
+import { PhotosDisplay } from "./components/PhotosDisplay.js";
 
 const App = () => {
   return (
     <div>
       <Authentication>
-        <NavBar />
         <Switch>
           <UnauthenticatedRoute exact path="/" redirect="/photos">
             <LoginForm />
           </UnauthenticatedRoute>
 
           <AuthenticatedRoute exact path="/photos" redirect="/">
+            <NavBar />
             <PhotosDisplay />
           </AuthenticatedRoute>
 
           <AuthenticatedRoute exact path="/about">
+            <NavBar />
             <h1>About</h1>
           </AuthenticatedRoute>
         </Switch>
       </Authentication>
     </div>
   );
-}
+};
 
 const AuthenticatedRoute = ({ children, redirect, ...props }) => {
   const auth = useAuth();
@@ -40,31 +38,31 @@ const AuthenticatedRoute = ({ children, redirect, ...props }) => {
     auth.check();
   });
 
-  const render = ({location}) => {
+  const render = ({ location }) => {
     if (!auth.user) {
-      return <Redirect to = {{pathname: redirect, state: {from: location}}} />
+      return (
+        <Redirect to={{ pathname: redirect, state: { from: location } }} />
+      );
     }
     return children;
-  }
+  };
 
-  return (
-    <Route {...props} render={render}/>
-  )
-}
+  return <Route {...props} render={render} />;
+};
 
 const UnauthenticatedRoute = ({ children, redirect, ...props }) => {
   const auth = useAuth();
 
-  const render = ({location}) => {
+  const render = ({ location }) => {
     if (auth.user) {
-      return <Redirect to = {{pathname: redirect, state: {from: location}}} />
+      return (
+        <Redirect to={{ pathname: redirect, state: { from: location } }} />
+      );
     }
     return children;
-  }
+  };
 
-  return (
-    <Route {...props} render={render}/>
-  )
-}
+  return <Route {...props} render={render} />;
+};
 
 export default App;
