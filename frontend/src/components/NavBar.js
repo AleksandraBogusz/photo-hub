@@ -5,9 +5,11 @@ import { Nav } from 'react-bootstrap';
 import { useAuth } from '../utils/Auth.js';
 import { Link } from 'react-router-dom';
 
+
 export const NavBar = () => {
     const auth = useAuth();
-    return auth.user ? <AuthenticatedNavBar /> : <UnauthenticatedNavBar />
+    return auth.user ? <AuthenticatedNavBar /> : <UnauthenticatedNavBar/>
+    
 }
 
 const LogoutButton = () => {
@@ -42,7 +44,7 @@ const AuthenticatedNavBar = () => {
 
 const UnauthenticatedNavBar = () => {
     return (
-        <Navbar bg="light" expand="lg">
+       <Navbar bg="light" expand="lg">
             <Navbar.Brand href="#home">PhotoHub</Navbar.Brand>
             <img
                 src={camera}
