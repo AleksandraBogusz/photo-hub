@@ -59,6 +59,7 @@ const useAuthProvider = () => {
 
     return {
         user,
+        token: localStorage.getItem(JWT_LOCAL_STORAGE_KEY),
         login,
         logout,
         check
