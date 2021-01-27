@@ -5,10 +5,10 @@ const Post = (props) => {
   return (
     <div>
       <LazyLoadImage
-        src={props.src.urls.regular}
-        alt={props.src.description}
+        src={props.src}
+        alt={props.description}
         onClick={() => {
-          props.setPhoto(props.src);
+          props.setPhoto(props.url);
         }}
         className="container-img"
         effect="blur"

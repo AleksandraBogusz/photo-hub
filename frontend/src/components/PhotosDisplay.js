@@ -2,12 +2,12 @@ import axios from "axios";
 import { useState, useEffect } from 'react';
 import { PostList } from './PostList.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-const KEY = "cJ5wjvqwJvzhxcMqKN4sD06AoQiW2iLW-AsyXaXnVrs";
+import { useAuth } from '../utils/Auth.js';
 
 export const PhotosDisplay = () => {
+  const auth = useAuth();
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [firstRender] = useState();
   const [hasMore, setHasMore] = useState(true);
 
@@ -21,33 +21,30 @@ export const PhotosDisplay = () => {
   const getFetchFunction = () => {
     const options = {
       headers: {
-        Authorization: `Client-ID ${KEY}`,
+        Authorization: `Bearer ${auth.token}`
       }
     }
 
     const withQuery = (query) => {
-      axios
-        .get(`https://api.unsplash.com/search/photos?query=${query}&page=${page}&per_page=30`, options)
-        .then((res) => {
-          const data = res.data.results;
-          setHasMore(data.length ? true : false)
+      axios.get(`http://localhost:50001/search?q=${query}&page=${page}&per_page=30`, options)
+        .then(res => {
+          const data = res.data;
+          setHasMore(data.length ? true : false);
           setPhotos(photos.concat(data));
           setPage(page + 1);
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     }
 
     const random = () => {
-      axios
-        .get(`https://api.unsplash.com/photos/random?page=${page}&count=30`, options)
-        .then((res) => {
+      axios.get(`http://localhost:50001/search?q=cat&page=${page}&per_page=30`, options)
+        .then(res => {
           const data = res.data;
-          setHasMore(data.length ? true : false)
+          setHasMore(data.length ? true : false);
           setPhotos(photos.concat(data));
           setPage(page + 1);
-          console.log(res);
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     }
 
     const query = getQuery();
