@@ -31,9 +31,9 @@ const AuthenticatedNavBar = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Link to="/">Home</Link>
-                    <Link to="/photos">Photos</Link>
-                    <Link to="/about">About</Link>
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/photos">Photos</Nav.Link>
+                    <Nav.Link href="/about">About</Nav.Link>
                     <SearchBar />
                 </Nav>
                 <LogoutButton />

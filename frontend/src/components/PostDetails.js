@@ -8,7 +8,6 @@ import { Card, ListGroup } from "react-bootstrap";
 
 const PostDetails = (props) => {
   const photo = props.photo;
-
   if (photo) {
     return (
       <div className="background-container" onClick={() => props.setPhoto("")}>
@@ -18,7 +17,7 @@ const PostDetails = (props) => {
           <Card>
             <Card.Header>Username</Card.Header>
             <Card.Body>
-              <Card.Img src={photo.urls.regular} variant="top" style={{width:300, height:400}} />
+              <Card.Img src={photo} variant="top" style={{width:300, height:400}} />
               <Card.Text>{photo.description}</Card.Text>
             </Card.Body>
 

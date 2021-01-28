@@ -8,7 +8,7 @@ const Post = (props) => {
         src={props.src}
         alt={props.description}
         onClick={() => {
-          props.setPhoto(props.url);
+          props.setPhoto(props.src);
         }}
         className="container-img"
         effect="blur"
