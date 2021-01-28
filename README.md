@@ -51,7 +51,7 @@ npm run dev
 
 
 ## How it works?
-App starts with a login page to sign in with credentials. The credentials teporararily are: Login: login1 Password: pass
+App starts with a login page to sign in with credentials. The credentials temporarily are: Login: login1 Password: pass
 ![image](https://user-images.githubusercontent.com/43926545/106159529-2db03780-6185-11eb-868c-65ec041774dc.png)
 
 By typing the search term users can find photos that they are intrested in. Photos are displayed as covers. Pictures are find by tags signed to each photo. 
@@ -62,7 +62,7 @@ After searching for "furnitures"
 
 When the background is clicked the post dissapears.
 
-After clicking on the photo there is displaied a post wit a full size photo and comments.
+After clicking on the photo there is displayed a post wit a full size photo and comments.
 ![image](https://user-images.githubusercontent.com/43926545/106159917-97304600-6185-11eb-8c63-28778d8c69f5.png)
 
 The Infinite scroll is implemented. After all photos  are fetched or there are no results with given tag message "No results" is showed.
