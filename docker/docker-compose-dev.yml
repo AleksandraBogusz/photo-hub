@@ -11,6 +11,7 @@ services:
             - ${MONGODB_PORT}:27017
         volumes:
             - "./mongodb/init:/docker-entrypoint-initdb.d"
+
     mongo-express:
         container_name: mongo-express
         image: mongo-express:0.54
