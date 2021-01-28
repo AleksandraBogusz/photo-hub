@@ -10,12 +10,12 @@ The goal of this project is to create a fully functionig photo sharing social ne
 * comment posts
 
 ## Technologies:
-* Node.js 15
-* React.js 17
-* Bootstrap 4
-* MongoDB 4
-* Docker 20.10.2
-* Solr 7
+* Node.js 
+* React.js 
+* Bootstrap
+* MongoDB
+* Docker 
+* Solr
 * [Fronted Libraries](https://github.com/AleksandraBogusz/photo-hub/blob/main/frontend/package.json)
 * [Authentication Service Libraries](https://github.com/AleksandraBogusz/photo-hub/blob/main/authentication-service/package.json)
 * [Search Service Libraries ](https://github.com/AleksandraBogusz/photo-hub/tree/main/search-service)
@@ -33,13 +33,22 @@ npm install
 1. Clone the project
 2. Install dependencies in each service
 3. Start docker containers by command:
-4. Start PhotoHub by command:
 ```bash
+cd ./docker
+./up-test.sh
+```
+4. Start PhotoHub by typing:
+```bash
+cd ../frontend
+npm start
+cd ../authentication-service
+npm run dev
+cd ../search-service
 npm run dev
 ```
-```bash
-npm start
-```
+
+
+
 
 ## How it works?
 App starts with a login page to sign in with credentials. The credentials teporararily are: Login: login1 Password: pass
