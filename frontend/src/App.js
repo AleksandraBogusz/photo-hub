@@ -6,6 +6,45 @@ import { useEffect } from "react/cjs/react.development";
 import { NavBar } from "./components/NavBar.js";
 import { LoginForm } from "./components/LoginForm.js";
 import { PhotosDisplay } from "./components/PhotosDisplay.js";
+import { useRef } from 'react';
+
+const FileUploader = () => {
+  const file = useRef();
+
+  const handleFileInput = (event) => {
+    console.log("FileUploader::handleFileInput");
+    file.current = event.target.files[0];
+  }
+
+  const submitFile = (event) => {
+    console.log("FileUploader::submitFile");
+    if (!file.current) {
+      return alert("You didn't choose any file.");
+    }
+
+    const formData = new FormData();
+    formData.append("super-file", file.current);
+
+    const options = {
+      method: "POST",
+      body: formData
+    }
+
+    fetch('http://localhost:50002/upload', options)
+      .then(response => response.json())
+      .then(json => alert(json.msg))
+      .catch(err => {
+        alert(err.message);
+      });
+  }
+
+  return (
+    <div>
+      <input type="file" name="super-file" onChange={handleFileInput} />
+      <button onClick={submitFile}>Send</button>
+    </div>
+  );
+}
 
 const App = () => {
   return (
@@ -13,7 +52,7 @@ const App = () => {
       <Authentication>
         <Switch>
           <UnauthenticatedRoute exact path="/" redirect="/photos">
-            <LoginForm />
+            <FileUploader />
           </UnauthenticatedRoute>
 
           <AuthenticatedRoute exact path="/photos" redirect="/">
