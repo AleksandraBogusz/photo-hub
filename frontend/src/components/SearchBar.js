@@ -9,7 +9,7 @@ export const SearchBar = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    window.location.replace(`http://localhost:3000/photos?q=${value}`)
+    window.location.replace(`http://localhost:3000/home?q=${value}`)
   };
 
   return (

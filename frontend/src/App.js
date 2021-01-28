@@ -6,17 +6,18 @@ import { useEffect } from "react/cjs/react.development";
 import { NavBar } from "./components/NavBar.js";
 import { LoginForm } from "./components/LoginForm.js";
 import { PhotosDisplay } from "./components/PhotosDisplay.js";
+import { Explore } from "./components/Explore.js";
 
 const App = () => {
   return (
     <div>
       <Authentication>
         <Switch>
-          <UnauthenticatedRoute exact path="/" redirect="/photos">
+          <UnauthenticatedRoute exact path="/" redirect="/home">
             <LoginForm />
           </UnauthenticatedRoute>
 
-          <AuthenticatedRoute exact path="/photos" redirect="/">
+          <AuthenticatedRoute exact path="/home" redirect="/">
             <NavBar />
             <PhotosDisplay />
           </AuthenticatedRoute>
@@ -25,6 +26,16 @@ const App = () => {
             <NavBar />
             <h1>About</h1>
           </AuthenticatedRoute>
+
+          <AuthenticatedRoute exact path="/explore">
+            <NavBar />
+            <Explore />
+          </AuthenticatedRoute>
+
+          <Route path="/">
+            <Redirect to="/" />
+          </Route>
+
         </Switch>
       </Authentication>
     </div>
