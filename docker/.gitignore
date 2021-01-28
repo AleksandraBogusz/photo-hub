@@ -1,0 +1,7 @@
+frontend/build/**
+frontend/shared/**
+authentication-service/build/**
+authentication-service/shared/**
+search-service/build/**
+search-service/shared/**
+
