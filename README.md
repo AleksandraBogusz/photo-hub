@@ -2,7 +2,7 @@
 
 It is a photo sharing social networking service. 
 
-##General Info
+## General Info
 The goal of this project is to create a fully functionig photo sharing social networking service that allows to:
 * create accounts
 * share photos
