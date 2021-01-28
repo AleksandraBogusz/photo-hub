@@ -1,0 +1,62 @@
+version: '3.7'
+
+services:
+    mongo:
+        container_name: mongodb
+        image: mongo:4.4.3-bionic
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        ports:
+            - ${MONGODB_PORT}:27017
+        volumes:
+            - "./mongodb/init:/docker-entrypoint-initdb.d"
+
+    mongo-express:
+        container_name: mongo-express
+        image: mongo-express:0.54
+        ports:
+            - ${MONGO_EXPRESS_PORT}:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+            ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    
+    solr:
+        container_name: solr
+        build:
+            context: ./solr
+        ports:
+            - ${SOLR_PORT}:8983
+        command: -cloud -f
+    
+    frontend:
+        container_name: frontend
+        build:
+            context: ./frontend
+        ports:
+            - 3000:3000
+    
+    authentication-service:
+        container_name: authentication-service
+        build:
+            context: ./authentication-service
+        environment:
+            - AUTHENTICATION_SERVICE_PORT=50000
+            - MONGODB_URL=mongodb://dev-user:dev-pwd@mongo:27017/photo_hub_db
+            - MONGODB_DB=photo_hub_db
+            - MONGODB_POOL_SIZE=10
+            - JWT_SECRET=???
+            - JWT_LOCAL_STORAGE_KEY=_jwt_token
+        ports:
+            - 50000:50000
+    
+    search-service:
+        container_name: search-service
+        build:
+            context: ./search-service
+        environment:
+            - SEARCH_SERVICE_PORT=50001
+            - SOLR_URL=http://solr:8983/solr
+            - JWT_SECRET=???
+        ports:
+            - 50001:50001
