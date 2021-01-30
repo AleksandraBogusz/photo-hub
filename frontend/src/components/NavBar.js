@@ -2,8 +2,6 @@ import camera from '../photos/shared/camera.png';
 import { SearchBar } from './SearchBar';
 import { Button, Nav, Navbar } from 'react-bootstrap';
 import { useAuth } from '../utils/Auth.js';
-import { Link } from 'react-router-dom';
-
 
 export const NavBar = () => {
     const auth = useAuth();
@@ -17,7 +15,7 @@ const LogoutButton = () => {
 
 const AuthenticatedNavBar = () => {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar sticky="top" bg="light" expand="lg">
             <Navbar.Brand href="#home">PhotoHub</Navbar.Brand>
             <img
                 src={camera}

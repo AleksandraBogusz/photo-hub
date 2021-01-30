@@ -2,6 +2,11 @@ import axios from "axios";
 import { useAuth } from "../utils/Auth.js";
 import { useEffect, useState } from "react";
 
+
+const MAX_FONT_SIZE = 48;
+const MIN_FONT_SIZE = 24;
+const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
+
 export const Explore = () => {
     const auth = useAuth();
     const [tags, setTags] = useState([]);
@@ -20,6 +25,7 @@ export const Explore = () => {
                     const addCount = () => {
                         acc.arr.push({tag: acc.tag, count: val})
                         acc.push = !acc.push;
+                        acc.max = acc.max < val ? val : acc.max;
                         return acc;
                     }
 
@@ -32,10 +38,17 @@ export const Explore = () => {
                     return acc.push ? addCount() : addTag();
                 }
 
-                const data = res.data.reduce(reducer, { arr: [], push: false }).arr;
-                const max = data.reduce((acc, {count}) => acc > count ? acc : count, 0);
+                const acc = { arr: [], max: 0, push: false }
+                const data = res.data
+                    .reduce(reducer, acc)
+                    .arr
+                    .map(({ tag, count }) => {
+                        const fontSize = Math.round((MAX_FONT_SIZE - MIN_FONT_SIZE) * (count - 1) / (acc.max - 1) + MIN_FONT_SIZE);
+                        return { tag, fontSize };
+                    })
+                    .sort(() => Math.random() - 0.5);
 
-                setTags(data.map(({tag, count}) => <Tag value={tag} count={count} max={max}/>));
+                setTags(data.map(({tag, fontSize}) => <Tag value={tag} size={fontSize}/>));
                 
             })
             .catch(err => console.log(err));
@@ -47,6 +60,6 @@ export const Explore = () => {
     return <div>{tags}</div>;
 }
 
-const Tag = ({value, count, max}) => {
-    return (<p>{value}</p>);
+const Tag = ({value, size}) => {
+    return (<a style={{fontSize: size}} href={`${FRONTEND_URL}/home?q=${value}`}>#{value} </a>)
 }
