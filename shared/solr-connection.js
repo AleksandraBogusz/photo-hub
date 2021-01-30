@@ -20,13 +20,35 @@ const search = (collection, query) => {
     }
 
     return new Promise((resolve, reject) => {
-        fetch(`${SOLR_URL}/${collection}/select?q=${query}`)
+        const url = `${SOLR_URL}/${collection}/select?${query}`
+        console.log(url);
+        fetch(url)
             .then(response => checkStatus(response))
             .then(response => response.json())
             .then(json => parse(json))
             .then(docs => resolve(docs))
             .catch(err => reject(err))
     });
+}
+
+const rawQuery = (collection, query) => {
+    const checkStatus = (response) => {
+        if (response.status !== 200) {
+            throw new Error(`status ${response.status}`);
+        }
+        return response;
+    }
+
+    return new Promise((resolve, reject) => {
+        const url = `${SOLR_URL}/${collection}/select?${query}`
+        console.log(url);
+        fetch(url)
+            .then(response => checkStatus(response))
+            .then(response => response.json())
+            .then(json => resolve(json))
+            .catch(err => reject(err))
+    });
+
 }
 
 const post = (collection, data) => {
@@ -54,5 +76,6 @@ const post = (collection, data) => {
 
 module.exports = {
     search,
-    post
+    post,
+    rawQuery,
 }

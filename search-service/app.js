@@ -24,7 +24,23 @@ app.get('/search', jwt.middleware, (req, res) => {
 
     photosRepository.findByTagWithPagination(q, page, perPage)
         .then(docs => {
-            return res.status(200).json(docs);
+            return res
+                .status(200)
+                .json(docs);
+        })
+        .catch(err => {
+            return res
+                .status(500)
+                .json({ msg: "Something went wrong!" });
+        });
+});
+
+app.get('/explore', jwt.middleware, (_, res) => {
+    photosRepository.findTheMostFrequentTags()
+        .then(docs => {
+            return res
+                .status(200)
+                .json(docs);
         })
         .catch(err => {
             return res

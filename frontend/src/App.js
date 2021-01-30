@@ -1,22 +1,24 @@
-import { Switch, Route } from "react-router-dom";
 
+import { Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { Authentication, useAuth } from "./utils/Auth.js";
 import { useEffect } from "react/cjs/react.development";
 import { NavBar } from "./components/NavBar.js";
 import { LoginForm } from "./components/LoginForm.js";
 import { PhotosDisplay } from "./components/PhotosDisplay.js";
+import { Explore } from "./components/Explore.js";
+import { ErrorPage } from "./components/ErrorPage.js";
 
 const App = () => {
   return (
     <div>
       <Authentication>
         <Switch>
-          <UnauthenticatedRoute exact path="/" redirect="/photos">
+          <UnauthenticatedRoute exact path="/" redirect="/home">
             <LoginForm />
           </UnauthenticatedRoute>
 
-          <AuthenticatedRoute exact path="/photos" redirect="/">
+          <AuthenticatedRoute exact path="/home" redirect="/">
             <NavBar />
             <PhotosDisplay />
           </AuthenticatedRoute>
@@ -25,6 +27,16 @@ const App = () => {
             <NavBar />
             <h1>About</h1>
           </AuthenticatedRoute>
+
+          <AuthenticatedRoute exact path="/explore">
+            <NavBar />
+            <Explore />
+          </AuthenticatedRoute>
+
+          <Route path="/">
+            <ErrorPage />
+          </Route>
+
         </Switch>
       </Authentication>
     </div>

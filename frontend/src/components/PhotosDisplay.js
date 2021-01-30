@@ -63,7 +63,6 @@ export const PhotosDisplay = () => {
         dataLength={photos.length}
         next={fetchPhotos}
         hasMore={hasMore}
-        loader={<h2>Loading...</h2>}
         endMessage={<h2>No results</h2>}
       >
         <PostList photos={photos} />
