@@ -7,6 +7,7 @@ import { NavBar } from "./components/NavBar.js";
 import { LoginForm } from "./components/LoginForm.js";
 import { PhotosDisplay } from "./components/PhotosDisplay.js";
 import { Explore } from "./components/Explore.js";
+import { About } from "./components/About.js"
 import { ErrorPage } from "./components/ErrorPage.js";
 
 const App = () => {
@@ -25,7 +26,7 @@ const App = () => {
 
           <AuthenticatedRoute exact path="/about">
             <NavBar />
-            <h1>About</h1>
+            <About />
           </AuthenticatedRoute>
 
           <AuthenticatedRoute exact path="/explore">
