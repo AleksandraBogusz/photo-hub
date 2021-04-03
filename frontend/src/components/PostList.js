@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Post from "./Post";
-import PostDetails from "./PostDetails";
 import "../styles/PostList.css";
 
 export const PostList = (props) => {
@@ -13,7 +12,6 @@ export const PostList = (props) => {
   return (
     <div className="container-wrapper">
       <div className="container">
-        <PostDetails photo={photo} setPhoto={setPhoto} />
         {list}
       </div>
     </div>

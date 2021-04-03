@@ -10,6 +10,8 @@ import { Explore } from "./components/Explore.js";
 import { About } from "./components/About.js"
 import { ErrorPage } from "./components/ErrorPage.js";
 
+import FocusBackground from './components/FocusBackground';
+
 const App = () => {
   return (
     <div>
@@ -20,6 +22,7 @@ const App = () => {
           </UnauthenticatedRoute>
 
           <AuthenticatedRoute exact path="/home" redirect="/">
+            <FocusBackground />
             <NavBar />
             <PhotosDisplay />
           </AuthenticatedRoute>
