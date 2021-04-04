@@ -4,6 +4,8 @@ import { PostList } from './PostList.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useAuth } from '../utils/Auth.js';
 
+const _SEARCH_SERVICE_URL = process.env.REACT_APP_SEARCH_SERVICE_URL;
+
 export const PhotosDisplay = () => {
   const auth = useAuth();
   const [photos, setPhotos] = useState([]);
@@ -26,7 +28,7 @@ export const PhotosDisplay = () => {
     }
 
     const withQuery = (query) => {
-      axios.get(`http://localhost:50001/search?q=${query}&page=${page}&per_page=30`, options)
+      axios.get(`${_SEARCH_SERVICE_URL}?q=${query}&page=${page}&per_page=30`, options)
         .then(res => {
           const data = res.data;
           setHasMore(data.length ? true : false);
@@ -37,7 +39,7 @@ export const PhotosDisplay = () => {
     }
 
     const random = () => {
-      axios.get(`http://localhost:50001/search?q=cat&page=${page}&per_page=30`, options)
+      axios.get(`${_SEARCH_SERVICE_URL}?q=cat&page=${page}&per_page=30`, options)
         .then(res => {
           const data = res.data;
           setHasMore(data.length ? true : false);

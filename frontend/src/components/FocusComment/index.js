@@ -19,4 +19,4 @@ export default FocusComment;
 const Avatar = ({value, className}) => <img src={value} alt='avatar' className={className}/>
 const Nickname = ({value, className}) => <span className={className}>{value}</span>
 const Header = ({children, className}) => <div className={className}>{children}</div>;
-const Content = ({value, className}) => <textarea className={className} value={value}/>
+const Content = ({value, className}) => <span className={className}>{value}</span>

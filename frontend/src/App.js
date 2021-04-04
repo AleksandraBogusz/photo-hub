@@ -50,7 +50,6 @@ const App = () => {
 const AuthenticatedRoute = ({ children, redirect, ...props }) => {
   const auth = useAuth();
   useEffect(() => {
-    console.log("Checking the token.");
     auth.check();
   });
 
