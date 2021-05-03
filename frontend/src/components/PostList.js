@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Post from "./Post";
 import "../styles/PostList.css";
 
 export const PostList = (props) => {
-  const [photo, setPhoto] = useState("");
-  const photos = props.photos;
+  const { photos } = props;
 
   const list = photos.map((photo) => {
-    return <Post src={photo.url} description={photo.description} key={photo.id} setPhoto={setPhoto} />;
+    const { url, description, image_id } = photo;
+    return <Post src={url} description={description} key={image_id} id={image_id}/>;
   });
   return (
     <div className="container-wrapper">

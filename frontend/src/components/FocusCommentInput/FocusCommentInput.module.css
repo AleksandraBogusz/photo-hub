@@ -1,21 +1,33 @@
 .main {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding: 5px;
     width: 100%;
-    height: 80px;
+    height: 20%;
     background-color: #fff;
 }
 
 .textarea {
     width: 100%;
-    height: 100%;
+    height: 80%;
     resize: none;
+    outline: none;
 }
 
 .textarea::-webkit-scrollbar {
     display: none;
 }
 
-.publish-link {
-    align-self: flex-end;
+.comment-len {
+    height: 20%;
+    margin-right: 10px;
+    font-size: small;
+    border: 1px solid #000;
+}
+
+.publish-btn {
+    display: block;
+    height: 20%;
+    border: 1px solid #000;
 }

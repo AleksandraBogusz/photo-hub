@@ -10,7 +10,6 @@ export const PhotosDisplay = () => {
   const auth = useAuth();
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(0);
-  const [firstRender] = useState();
   const [hasMore, setHasMore] = useState(true);
 
   const getQuery = () => {
@@ -57,7 +56,11 @@ export const PhotosDisplay = () => {
 
   useEffect(() => {
     fetchPhotos();
-  }, [firstRender]);
+  }, []);
+
+  useEffect(() => {
+    console.log(photos);
+  }, [photos]);
 
   return (
     <div>
