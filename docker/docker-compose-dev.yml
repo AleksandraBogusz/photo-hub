@@ -36,7 +36,7 @@ services:
             - ${AZURE_BLOB_PORT}:10000
         environment:
             AZURITE_ACCOUNTS: ${AZURITE_ACCOUNTS}
-        command: azurite-blob --blobHost 0.0.0.0
+        command: azurite-blob --blobHost 0.0.0.0 --debug /debug.log
     
     azure-blob-init:
         container_name: azure-blob-init

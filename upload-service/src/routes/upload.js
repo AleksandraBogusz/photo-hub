@@ -6,8 +6,9 @@ const upload = multer({ storage });
 
 const router = express.Router();
 
-router.post('/upload', upload.single('main-photo'), (req, res) => {
-
+router.post('/', upload.single('main-photo'), (req, res) => {
+    console.log(req.file);
+    res.json({ msg: "ok" });
 });
 
 module.exports = router;

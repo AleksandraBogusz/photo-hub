@@ -15,9 +15,10 @@ storage_service_version="2020-06-12"
 # HTTP Request headers
 x_ms_date_h="x-ms-date:$request_date"
 x_ms_version_h="x-ms-version:$storage_service_version"
+x_ms_blob_public_access="x-ms-blob-public-access:container"
 
 # Build the signature string
-canonicalized_headers="${x_ms_date_h}\n${x_ms_version_h}"
+canonicalized_headers="${x_ms_blob_public_access}\n${x_ms_date_h}\n${x_ms_version_h}"
 canonicalized_resource="/${storage_account}/${storage_account}/${container_name}"
 
 string_to_sign="${request_method}\n\n\n\n\n\n\n\n\n\n\n\n${canonicalized_headers}\n${canonicalized_resource}\nrestype:container"
@@ -34,5 +35,6 @@ curl \
     -XPUT \
     -H "$x_ms_date_h" \
     -H "$x_ms_version_h" \
+    -H "$x_ms_blob_public_access" \
     -H "$authorization_header" \
     "http://${blob_store_url}/${storage_account}/${container_name}?restype=container"
