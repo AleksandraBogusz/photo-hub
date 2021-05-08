@@ -28,3 +28,19 @@ services:
         ports:
             - ${SOLR_PORT}:8983
         command: -cloud -f
+    
+    azure-blob:
+        container_name: azure-blob
+        image: mcr.microsoft.com/azure-storage/azurite:3.12.0
+        ports:
+            - ${AZURE_BLOB_PORT}:10000
+        environment:
+            AZURITE_ACCOUNTS: ${AZURITE_ACCOUNTS}
+        command: azurite-blob --blobHost 0.0.0.0 --debug /debug.log
+    
+    azure-blob-init:
+        container_name: azure-blob-init
+        build:
+            context: ./azure-blob-init
+        depends_on:
+            - azure-blob
