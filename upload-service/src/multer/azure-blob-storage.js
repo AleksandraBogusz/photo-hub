@@ -1,4 +1,6 @@
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob');
+const { v4 }  = require('uuid');
+const mime = require('mime-types');
 
 const ACCOUNT           = 'account1';
 const ACCOUNT_KEY       = 'key1';
@@ -10,7 +12,7 @@ const _client               = new BlobServiceClient(BLOB_STORAGE_URL, _sharedKey
 const _containerClient      = _client.getContainerClient(CONTAINER_NAME);
 
 const _handleFile = (_, file, cb) => {
-    const blobName   = `blob-${new Date().getTime()}`;
+    const blobName   = `img-${v4()}-${new Date().getTime()}.${mime.extension(file.mimetype)}`;
     const blobClient = _containerClient.getBlockBlobClient(blobName);
 
     blobClient
