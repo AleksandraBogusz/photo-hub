@@ -30,6 +30,7 @@ const AuthenticatedNavBar = () => {
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/explore">Explore</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>
+                    <Nav.Link href="/upload">Upload</Nav.Link>
                     <SearchBar />
                 </Nav>
                 <LogoutButton />

@@ -9,6 +9,7 @@ import { PhotosDisplay } from "./components/PhotosDisplay.js";
 import { Explore } from "./components/Explore.js";
 import { About } from "./components/About.js"
 import { ErrorPage } from "./components/ErrorPage.js";
+import PhotoUploadPage from "./components/PhotoUploadPage";
 
 import FocusBackground from './components/FocusBackground';
 
@@ -35,6 +36,11 @@ const App = () => {
           <AuthenticatedRoute exact path="/explore">
             <NavBar />
             <Explore />
+          </AuthenticatedRoute>
+
+          <AuthenticatedRoute exact path="/upload">
+            <NavBar />
+            <PhotoUploadPage />
           </AuthenticatedRoute>
 
           <Route path="/">

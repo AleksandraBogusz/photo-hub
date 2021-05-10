@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const multer = require('multer');
 const storage = require('../multer/azure-blob-storage');
 const solr = require('shared/solr-connection');
@@ -8,6 +9,8 @@ const { v4 } = require('uuid');
 const upload = multer({ storage });
 
 const router = express.Router();
+
+router.use(cors())
 
 // TODO: add multer error handling
 // TODO: title, description and tag validation happens after the file gets uploaded

@@ -1,0 +1,6 @@
+.photo {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    z-index: 0;
+  }
